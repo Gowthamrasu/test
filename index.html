@@ -1,13 +1,13 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Contact Form</title>
   <meta charset="utf-8">
+  <title>Contact Form</title>
 </head>
 <body>
   <h2>Contact Form</h2>
-
-  <form id="dataForm" action="https://script.google.com/macros/s/AKfycbxjZ6KqNqOvb7Ckh1Kzvz-GSsOopC4SdjrAGnrNFFRkcADiZVdn9FBrF-O4OoA0WCLoYA/exec" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+  
+  <form action="https://script.google.com/macros/s/AKfycbxXxOfnujGtGYUZNQrEOcdc5kPiJ2pbWanGTcxfWKyi5Nzqr9TDP_gUHu_YBBpijjF9ow/exec" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
     <label>Name:</label><br>
     <input type="text" name="name" required><br><br>
 
@@ -20,8 +20,8 @@
     <button type="submit">Submit</button>
   </form>
 
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;" 
-          onload="if(submitted){alert('✅ Data saved successfully!'); document.getElementById('dataForm').reset();}">
+  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"
+          onload="if(submitted){alert('✅ Data submitted successfully!'); document.querySelector('form').reset();}">
   </iframe>
 
   <script>
@@ -29,4 +29,3 @@
   </script>
 </body>
 </html>
-

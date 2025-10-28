@@ -6,26 +6,53 @@
 </head>
 <body>
   <h2>Contact Form</h2>
-  
-  <form action="https://script.google.com/macros/s/AKfycbxXxOfnujGtGYUZNQrEOcdc5kPiJ2pbWanGTcxfWKyi5Nzqr9TDP_gUHu_YBBpijjF9ow/exec" method="POST" target="hidden_iframe" onsubmit="submitted=true;">
+
+  <form id="dataForm">
     <label>Name:</label><br>
-    <input type="text" name="name" required><br><br>
+    <input type="text" id="name" required><br><br>
 
     <label>Email:</label><br>
-    <input type="email" name="email" required><br><br>
+    <input type="email" id="email" required><br><br>
 
     <label>Message:</label><br>
-    <textarea name="message" required></textarea><br><br>
+    <textarea id="message" required></textarea><br><br>
 
     <button type="submit">Submit</button>
   </form>
 
-  <iframe name="hidden_iframe" id="hidden_iframe" style="display:none;"
-          onload="if(submitted){alert('✅ Data submitted successfully!'); document.querySelector('form').reset();}">
-  </iframe>
+  <p id="response"></p>
 
   <script>
-    var submitted = false;
+    const form = document.getElementById("dataForm");
+    form.addEventListener("submit", async (e) => {
+      e.preventDefault();
+      const responseEl = document.getElementById("response");
+
+      const data = {
+        name: document.getElementById("name").value,
+        email: document.getElementById("email").value,
+        message: document.getElementById("message").value
+      };
+
+      responseEl.textContent = "⏳ Sending...";
+
+      try {
+        const res = await fetch("https://script.google.com/macros/s/AKfycbweNAktAyMAT6XGlD4edEC-Qh4C38jRu2DxF6GA4rWLbHT1R7B16JFxDjGt_DcU4mQa/exec", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(data),
+        });
+        const result = await res.json();
+        if (result.success) {
+          responseEl.textContent = "✅ Data saved successfully!";
+          form.reset();
+        } else {
+          responseEl.textContent = "❌ Error: " + result.error;
+        }
+      } catch (err) {
+        responseEl.textContent = "❌ Failed to connect: " + err.message;
+      }
+    });
   </script>
 </body>
 </html>
